@@ -72,13 +72,13 @@ public class CartesianPowerTest {
         for(int setSize=1;setSize<=maxSetSize;setSize++) {
             for (int tupleLength = 0; tupleLength <= maxTupleLength; tupleLength++) {
                 out("setSize="+setSize+", tupleLength="+tupleLength);
-                consumer.consume(setSize, tupleLength, solve(setSize, tupleLength));
+                consumer.accept(setSize, tupleLength, solve(setSize, tupleLength));
             }
         }
     }
 
     interface CartesianPowerResultConsumer {
-        void consume(int setSize, int tupleLength, List<List<Integer>> result);
+        void accept(int setSize, int tupleLength, List<List<Integer>> result);
     }
 
     private List<List<Integer>> solve(int setSize, int tupleLength) {
