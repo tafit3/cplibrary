@@ -9,7 +9,7 @@ public class CartesianPower {
         int[] c = new int[tupleLength];
         for(long i=0;i<p;i++) {
             long u = i;
-            for(int k=0;k<tupleLength;k++) {
+            for(int k=tupleLength-1;k>=0;k--) {
                 c[k] = (int)(u%setSize);
                 u /= setSize;
             }

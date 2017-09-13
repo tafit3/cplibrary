@@ -1,16 +1,15 @@
 package tafit3.cplibrary;
 
-import org.fest.assertions.Condition;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NavigableSet;
-import java.util.Set;
 import java.util.TreeSet;
 
 import static java.lang.Math.*;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.*;
 import static org.fest.assertions.Assertions.*;
 import static tafit3.cplibrary.CartesianPower.*;
 import static tafit3.cplibrary.TestUtils.*;
@@ -31,38 +30,60 @@ public class CartesianPowerTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void testCartesianPower() {
+    public void tuplesAreInOrder() {
+        allSetSizesAndTupleLengths((setSize, tupleLength, result) ->
+                assertThat(result).isEqualTo(result.stream().sorted(INTEGER_TUPLE_COMPARATOR).collect(toList())));
+    }
+
+    @Test
+    public void cartesianPowerHasSize_setSize_to_the_power_of_tupleLength() {
+        allSetSizesAndTupleLengths((setSize, tupleLength, result) ->
+                assertThat(result).hasSize((int) naivePow(setSize, tupleLength)));
+    }
+
+    @Test
+    public void allTuplesHaveProperLength() {
+        allSetSizesAndTupleLengths((setSize, tupleLength, result) ->
+                result.forEach(tuple -> assertThat(tuple).hasSize(tupleLength)));
+    }
+
+    @Test
+    public void allTuplesContainElementsBetween_0_and_setSize_minus_1() {
+        allSetSizesAndTupleLengths((setSize, tupleLength, result) ->
+                result.forEach(tuple -> {
+                    if(tupleLength != 0 || !tuple.isEmpty()) {
+                        NavigableSet<Integer> elements = new TreeSet<>(tuple);
+                        assertThat(elements.first()).isGreaterThanOrEqualTo(0);
+                        assertThat(elements.last()).isLessThan(setSize);
+                    }
+                }));
+    }
+
+    @Test
+    public void allTuplesAreDistinct() {
+        allSetSizesAndTupleLengths((setSize, tupleLength, result) ->
+                assertThat(result).hasSize(new HashSet<>(result).size()));
+    }
+
+    private void allSetSizesAndTupleLengths(CartesianPowerResultConsumer consumer) {
         final int maxSetSize = 7;
         final int maxTupleLength = 7;
 
-        for(int n=1;n<=maxSetSize;n++) {
-            int nn = n;
-            for(int k=0;k<=maxTupleLength;k++) {
-                int kk = k;
-                Set<List<Integer>> s = solve(n, k);
-                out("n="+n+", k="+k);
-                assertThat(s).hasSize((int)naivePow(n, k));
-                for(List<Integer> tuple: s) {
-                    assertThat(tuple).hasSize(k);
-                    assertThat(tuple).satisfies(new Condition<List<?>>() {
-                        @Override
-                        public boolean matches(List<?> list) {
-                            if(list.isEmpty() && kk == 0) {
-                                return true;
-                            }
-                            NavigableSet<Integer> elements = new TreeSet<>((List<Integer>) list);
-                            return elements.first() >= 0 && elements.last() < nn;
-                        }
-                    });
-                }
+        for(int setSize=1;setSize<=maxSetSize;setSize++) {
+            for (int tupleLength = 0; tupleLength <= maxTupleLength; tupleLength++) {
+                out("setSize="+setSize+", tupleLength="+tupleLength);
+                consumer.consume(setSize, tupleLength, solve(setSize, tupleLength));
             }
         }
     }
 
-    private Set<List<Integer>> solve(int n, int k) {
-        Set<List<Integer>> res = new HashSet<>();
-        cartesianPower(n, k, v -> res.add(convertToList(v)));
+    interface CartesianPowerResultConsumer {
+        void consume(int setSize, int tupleLength, List<List<Integer>> result);
+    }
+
+    private List<List<Integer>> solve(int setSize, int tupleLength) {
+        List<List<Integer>> res = new ArrayList<>();
+        cartesianPower(setSize, tupleLength, tuple -> res.add(convertToList(tuple)));
         return res;
     }
 
