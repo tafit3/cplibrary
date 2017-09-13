@@ -1,5 +1,6 @@
 package tafit3.cplibrary;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -45,4 +46,17 @@ public class TestUtils {
     public static class Holder<T> {
         T object;
     }
+
+    public static String ats(int[] x) {
+        return Arrays.toString(x);
+    }
+
+    public static String ats(long[] x) {
+        return Arrays.toString(x);
+    }
+
+    public static String ats(Object[] x) {
+        return Arrays.deepToString(x);
+    }
+
 }
