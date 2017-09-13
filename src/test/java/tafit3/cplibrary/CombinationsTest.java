@@ -72,16 +72,4 @@ public class CombinationsTest {
         return res;
     }
 
-    private long newton(long n, long k) {
-        return fac(n) / (fac(k)*fac(n-k));
-    }
-
-    private long fac(long x) {
-        long res = 1;
-        for(long a=1;a<=x;a++) {
-            res *= a;
-        }
-        return res;
-    }
-
 }

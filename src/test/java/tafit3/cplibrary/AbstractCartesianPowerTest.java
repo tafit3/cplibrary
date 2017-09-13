@@ -7,26 +7,12 @@ import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
-import static java.lang.Math.*;
 import static java.util.stream.Collectors.*;
 import static org.fest.assertions.Assertions.*;
 import static tafit3.cplibrary.CartesianPower.*;
 import static tafit3.cplibrary.TestUtils.*;
 
 public abstract class AbstractCartesianPowerTest {
-
-    @Test
-    public void testNaivePow() {
-        final long maxValue = 10;
-
-        for(long a=0;a<=maxValue;a++) {
-            for(long b=0;b<=maxValue;b++) {
-                long s = naivePow(a, b);
-                long br = brutePow(a, b);
-                assertThat(s).isEqualTo(br);
-            }
-        }
-    }
 
     @Test
     public void tuplesAreInOrder() {
@@ -82,7 +68,4 @@ public abstract class AbstractCartesianPowerTest {
 
     protected abstract List<List<Integer>> solve(int setSize, int tupleLength);
 
-    private long brutePow(long a, long b) {
-        return (long)pow(a,b);
-    }
 }

@@ -35,6 +35,18 @@ public class TestUtils {
 
     public static final Comparator<List<Integer>> INTEGER_TUPLE_COMPARATOR = tupleComparator();
 
+    public static long newton(long n, long k) {
+        return fac(n) / (fac(k)*fac(n-k));
+    }
+
+    public static long fac(long x) {
+        long res = 1;
+        for(long a=1;a<=x;a++) {
+            res *= a;
+        }
+        return res;
+    }
+
     public static List<Integer> convertToList(int[] a) {
         return stream(a).boxed().collect(toList());
     }
