@@ -71,4 +71,11 @@ public class TestUtils {
         return Arrays.deepToString(x);
     }
 
+    public static long[] int2longArray(int[] a) {
+        long[] res = new long[a.length];
+        for(int i=0;i<a.length;i++) {
+            res[i] = a[i];
+        }
+        return res;
+    }
 }

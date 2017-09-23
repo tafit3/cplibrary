@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 import static tafit3.cplibrary.CartesianPowerDiagonally.*;
 import static tafit3.cplibrary.TestUtils.*;
 

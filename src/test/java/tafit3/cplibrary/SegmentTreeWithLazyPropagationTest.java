@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.fest.assertions.Assertions.*;
 import static tafit3.cplibrary.CartesianPower.*;
+import static tafit3.cplibrary.TestUtils.*;
 
 public class SegmentTreeWithLazyPropagationTest {
 
@@ -82,11 +83,4 @@ public class SegmentTreeWithLazyPropagationTest {
         return true;
     }
 
-    private static long[] int2longArray(int[] a) {
-        long[] res = new long[a.length];
-        for(int i=0;i<a.length;i++) {
-            res[i] = a[i];
-        }
-        return res;
-    }
 }
